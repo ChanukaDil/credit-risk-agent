@@ -1,0 +1,158 @@
+
+
+# ═══════════════════════════════════════════════════════════
+# .gitignore for Credit Risk Agent
+# ═══════════════════════════════════════════════════════════
+
+# ──────────────────────────────────────────────────────────
+# Python
+# ──────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ──────────────────────────────────────────────────────────
+# Virtual Environments
+# ──────────────────────────────────────────────────────────
+venv/
+venv_agent/
+ENV/
+env/
+.venv
+.env.local
+
+# ──────────────────────────────────────────────────────────
+# CRITICAL: Large Model Files (DON'T UPLOAD TO GITHUB)
+# ──────────────────────────────────────────────────────────
+# Trained models
+models/autoencoder/*.pth
+models/autoencoder/*.pt
+models/llm/
+models/vector_db/
+models/checkpoints/
+
+# Preprocessor (can be large)
+models/preprocessor/*.pkl
+models/preprocessor/*.joblib
+
+# ──────────────────────────────────────────────────────────
+# CRITICAL: Data Files (DON'T UPLOAD TO GITHUB)
+# ──────────────────────────────────────────────────────────
+# Raw data
+data/raw/*.csv
+data/raw/*.xlsx
+data/raw/*.json
+
+# Processed data
+data/processed/*.npy
+data/processed/*.npz
+data/processed/*.h5
+
+# Temporary data
+data/temp/
+
+# ──────────────────────────────────────────────────────────
+# CRITICAL: Environment Variables & Secrets
+# ──────────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+*.pem
+*.key
+secrets/
+
+# ──────────────────────────────────────────────────────────
+# Results & Logs
+# ──────────────────────────────────────────────────────────
+results/validation_errors.npy
+results/figures/
+results/logs/*.log
+results/metrics/
+results/reports/
+*.log
+
+# ──────────────────────────────────────────────────────────
+# Jupyter Notebooks
+# ──────────────────────────────────────────────────────────
+.ipynb_checkpoints
+notebooks/.ipynb_checkpoints
+*.ipynb
+
+# ──────────────────────────────────────────────────────────
+# IDE - Visual Studio Code
+# ──────────────────────────────────────────────────────────
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ──────────────────────────────────────────────────────────
+# Operating System
+# ──────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ──────────────────────────────────────────────────────────
+# Testing
+# ──────────────────────────────────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# ──────────────────────────────────────────────────────────
+# Database
+# ──────────────────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ──────────────────────────────────────────────────────────
+# Docker
+# ──────────────────────────────────────────────────────────
+docker-compose.override.yml
+
+# ──────────────────────────────────────────────────────────
+# Other
+# ──────────────────────────────────────────────────────────
+*.bak
+*.swp
+*.swo
+*~
+.cache/
+
+# ═══════════════════════════════════════════════════════════
+# WHAT TO INCLUDE (These are safe to upload):
+# - Source code (.py files)
+# - Documentation (.md files)
+# - Configuration templates (.example files)
+# - Requirements files
+# - Dockerfiles
+# - Scripts
+# ═══════════════════════════════════════════════════════════

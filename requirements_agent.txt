@@ -1,0 +1,63 @@
+
+scikit-learn>=1.3.0
+imbalanced-learn>=0.11.0
+pandas>=2.0.0
+# numpy==2.3.3  # Already installed
+joblib>=1.3.0
+matplotlib>=3.7.0
+seaborn>=0.12.0
+tqdm>=4.66.0
+
+# ──────────────────────────────────────────────────────────
+# NEW: LLM & AGENT FRAMEWORK
+# ──────────────────────────────────────────────────────────
+# LangChain ecosystem (RECOMMENDED - Use this)
+langchain>=0.1.0
+langchain-community>=0.0.20
+langchain-core>=0.1.0
+langgraph>=0.0.20              # For stateful agents (optional but recommended)
+
+# LLM Interface
+transformers>=4.35.0            # HuggingFace transformers
+accelerate>=0.24.0              # Faster inference
+# bitsandbytes==0.44.1          # Skip on Windows - Linux only
+# sentencepiece==0.2.0          # Skip - requires CMake, install only if needed
+protobuf>=3.20.0
+
+# ──────────────────────────────────────────────────────────
+# NEW: RAG & VECTOR DATABASE
+# ──────────────────────────────────────────────────────────
+# Embeddings
+sentence-transformers>=2.2.0    # For all-MiniLM-L6-v2
+
+# Vector Databases (Choose one or both)
+chromadb>=0.4.0                 # RECOMMENDED - Easy to use
+faiss-cpu>=1.7.4                # Alternative - Faster but more complex
+
+# Document Processing
+langchain-chroma>=0.1.0         # LangChain + ChromaDB integration
+pypdf>=3.0.0                    # PDF loading
+python-docx>=0.8.11             # Word documents
+# unstructured==0.16.8          # Skip - complex dependencies, install separately if needed
+
+# ──────────────────────────────────────────────────────────
+# NEW: API & WEB INTERFACE
+# ──────────────────────────────────────────────────────────
+fastapi>=0.100.0                # REST API
+uvicorn[standard]>=0.23.0       # ASGI server
+pydantic>=2.0.0                 # Data validation
+pydantic-settings>=2.0.0        # Settings management
+
+# ──────────────────────────────────────────────────────────
+# NEW: UTILITIES & MONITORING
+# ──────────────────────────────────────────────────────────
+python-dotenv>=1.0.0            # Environment variables
+loguru>=0.7.0                   # Better logging
+rich>=13.0.0                    # CLI formatting
+typer>=0.9.0                    # CLI framework
+
+pytest>=7.4.0                   # Testing
+pytest-asyncio>=0.21.0          # Async tests
+httpx>=0.24.0                   # API testing
+jupyter>=1.0.0                  # Notebooks
+ipywidgets>=8.0.0               # Interactive widgets

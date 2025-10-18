@@ -1,0 +1,63 @@
+{
+  "original_csv_path": "data/raw/Bank_data.csv",
+  "target_column": "RESCHEDULE",
+  "balance_strategy": "smote_tomek",
+  "feature_names": [
+    "NET_RENTAL",
+    "NO_OF_RENTAL",
+    "PAID_RENTALS",
+    "CB_ARREARS_AGE",
+    "YOM",
+    "FINANCE_AMOUNT",
+    "CUSTOMER_VALUATION",
+    "EFFECTIVE_RATE",
+    "AGE",
+    "INCOME",
+    "EXPENSE",
+    "PRODUCT_CODE_encoded",
+    "PRODUCT_NAME_encoded",
+    "PRODUCT_CATEGORY_encoded",
+    "CONTRACT_NO_encoded",
+    "CONTRACT_STATUS_encoded",
+    "CONTRACT_DATE_encoded",
+    "RECOVERY_STATUS_encoded",
+    "LAST_PAYMENT_DATE_encoded",
+    "DUE_FREQUENCY_encoded",
+    "ASSET_TYPE_NAME_encoded",
+    "MAKE_encoded",
+    "MODEL_NAME_encoded",
+    "REGISTRATION_encoded",
+    "REGISTRATION_NO_encoded",
+    "GENDER_encoded",
+    "CITY_encoded",
+    "DISTRICT_NAME_encoded",
+    "PROVINCE_NAME_encoded",
+    "MARITAL_STATUS_encoded"
+  ],
+  "original_shape": [
+    167452,
+    30
+  ],
+  "train_shape": [
+    137654,
+    30
+  ],
+  "val_shape": [
+    9932,
+    30
+  ],
+  "test_shape": [
+    19866,
+    30
+  ],
+  "imbalance_info": {
+    "original_distribution": {
+      "NO": 68827,
+      "YES": 701
+    },
+    "balanced_distribution": {
+      "NO": 68827,
+      "YES": 68827
+    }
+  }
+}

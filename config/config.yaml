@@ -1,0 +1,11 @@
+experiment:
+  name: default_run
+  seed: 42
+
+data:
+  raw_path: data/raw
+  processed_path: data/processed
+
+model:
+  type: autoencoder
+  save_dir: models/autoencoder
