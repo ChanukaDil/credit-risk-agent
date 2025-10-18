@@ -132,10 +132,6 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## 👤 Author
-
-Your Name - [@your-github-username](https://github.com/your-username)
-
 ## 🙏 Acknowledgments
 
 - Original dataset: [Bank Data Source]
