@@ -124,14 +124,6 @@ docker-compose logs -f agent-api
 - **Inference Time**: <1 second per customer
 - **Batch Processing**: ~1000 customers/second
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
 ## 🙏 Acknowledgments
 
 - Original dataset: [Bank Data Source]
