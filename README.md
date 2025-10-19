@@ -124,36 +124,8 @@ docker-compose logs -f agent-api
 - **Inference Time**: <1 second per customer
 - **Batch Processing**: ~1000 customers/second
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 👤 Author
-
-Your Name - [@your-github-username](https://github.com/your-username)
-
 ## 🙏 Acknowledgments
 
 - Original dataset: [Bank Data Source]
 - LangChain for agent framework
 - HuggingFace for models
-
-## ⚠️ Important Notes
-
-**Model Files**: Large model files are not included in this repository due to size constraints. Download them using:
-
-```bash
-python scripts/download_models.py
-```
-
-**Data Files**: Sample data structure is provided, but actual data files must be obtained separately.
-
-**Environment Variables**: Copy `.env.example` to `.env` and configure your settings.
-
----
-
-**Star ⭐ this repository if you find it helpful!**
