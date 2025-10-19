@@ -1,9 +1,11 @@
 # 🎓 CREDIT RISK AGENT - COMPLETE TECHNICAL OVERVIEW
+
 ## Expert-Level Analysis for LLM Engineer
 
 ---
 
 ## 📋 TABLE OF CONTENTS
+
 1. [Project Architecture Overview](#1-project-architecture-overview)
 2. [Data Preprocessing Pipeline](#2-data-preprocessing-pipeline)
 3. [Autoencoder Deep Dive](#3-autoencoder-deep-dive)
@@ -17,7 +19,9 @@
 ## 1. PROJECT ARCHITECTURE OVERVIEW
 
 ### 🎯 **Core Mission**
+
 Build an AI-powered credit risk assessment system that combines:
+
 - **Deep Learning** (Autoencoder for anomaly detection)
 - **RAG** (Retrieval-Augmented Generation for policy compliance)
 - **LLM** (Natural language explanations and decision support)
@@ -65,16 +69,16 @@ Build an AI-powered credit risk assessment system that combines:
 
 ### 🛠️ **Technology Stack**
 
-| Component | Technology | Version | Purpose |
-|-----------|-----------|---------|---------|
-| **Deep Learning** | PyTorch | 2.8.0 | Autoencoder training |
-| **ML Preprocessing** | scikit-learn | 1.7.2 | Data transformation |
-| **Imbalanced Data** | imbalanced-learn | 0.14.0 | SMOTE-Tomek balancing |
-| **LLM Framework** | LangChain | 1.0.0 | Agent orchestration |
-| **Vector DB** | ChromaDB | 1.2.0 | RAG document storage |
-| **Embeddings** | sentence-transformers | 5.1.1 | Text embeddings |
-| **API** | FastAPI | 0.119.0 | REST endpoints |
-| **Visualization** | matplotlib, seaborn | 3.10.7, 0.13.2 | Analytics |
+| Component            | Technology            | Version        | Purpose               |
+| -------------------- | --------------------- | -------------- | --------------------- |
+| **Deep Learning**    | PyTorch               | 2.8.0          | Autoencoder training  |
+| **ML Preprocessing** | scikit-learn          | 1.7.2          | Data transformation   |
+| **Imbalanced Data**  | imbalanced-learn      | 0.14.0         | SMOTE-Tomek balancing |
+| **LLM Framework**    | LangChain             | 1.0.0          | Agent orchestration   |
+| **Vector DB**        | ChromaDB              | 1.2.0          | RAG document storage  |
+| **Embeddings**       | sentence-transformers | 5.1.1          | Text embeddings       |
+| **API**              | FastAPI               | 0.119.0        | REST endpoints        |
+| **Visualization**    | matplotlib, seaborn   | 3.10.7, 0.13.2 | Analytics             |
 
 ---
 
@@ -87,7 +91,7 @@ class CreditRiskPreprocessor:
     """
     Complete preprocessing pipeline with leakage prevention
     """
-    
+
     # Components:
     - RobustScaler()           # Better for financial outliers
     - LabelEncoder()           # Categorical encoding
@@ -98,6 +102,7 @@ class CreditRiskPreprocessor:
 ### 📂 **Input Data Structure**
 
 **File:** `data/raw/Bank_data.csv`
+
 - **Size:** 100,000 loan applications
 - **Features:** 32 columns (11 numerical + 19 categorical + 1 target)
 - **Target:** `DEFAULT` (YES/NO) - Extremely imbalanced (99:1)
@@ -105,12 +110,14 @@ class CreditRiskPreprocessor:
 ### 🔧 **Step-by-Step Breakdown**
 
 #### **STEP 1: Load Data** 📥
+
 ```python
 df = preprocessor.load_data('data/raw/Bank_data.csv')
 # Result: 100,000 rows × 32 columns
 ```
 
 **Key Features:**
+
 - Auto-detects target column (DEFAULT, LOAN_STATUS, etc.)
 - Reports memory usage and data types
 - Identifies categorical vs numerical features
@@ -118,36 +125,41 @@ df = preprocessor.load_data('data/raw/Bank_data.csv')
 ---
 
 #### **STEP 2: Clean Data** 🧹
+
 ```python
 df = preprocessor.clean_data(df)
 # Result: 99,326 rows (674 removed)
 ```
 
 **Cleaning Operations:**
+
 1. **Remove duplicates:** Based on customer ID or all features
 2. **Drop high-missing columns:** >50% missing → dropped
 3. **Remove outliers:** IQR method on numerical features
 4. **Handle invalid values:** Negative incomes, future dates, etc.
 
 **Example Output:**
+
 ```
 📊 Data Cleaning Summary:
   - Duplicates removed: 150
   - Outliers removed: 524
   - Missing > 50%: 2 columns dropped
-  
+
 ✅ Cleaning complete: 100,000 → 99,326 rows
 ```
 
 ---
 
 #### **STEP 3: Feature Engineering** 🏗️
+
 ```python
 df = preprocessor.engineer_features(df)
 # Result: +7 new features
 ```
 
 **Engineered Features:**
+
 1. **debt_to_income_ratio** = debt / income
 2. **credit_utilization** = credit_used / credit_limit
 3. **loan_to_value** = loan_amount / property_value
@@ -157,6 +169,7 @@ df = preprocessor.engineer_features(df)
 7. **income_stability** = employment_length × log(income)
 
 **Why these matter:**
+
 - **Debt-to-income:** Key predictor of default risk
 - **Credit utilization:** High utilization = financial stress
 - **Risk score:** Composite measure of past behavior
@@ -164,17 +177,20 @@ df = preprocessor.engineer_features(df)
 ---
 
 #### **STEP 4: Encode Categorical** 🔢
+
 ```python
 df = preprocessor.encode_categorical(df, fit=True)
 # Result: 19 categorical → numerical
 ```
 
 **Encoding Strategy:**
+
 - **LabelEncoder** for ordinal features (LOW/MEDIUM/HIGH)
 - **One-Hot Encoding** avoided (too many categories)
 - **Unknown handling:** New categories → -1
 
 **Example:**
+
 ```
 EMPLOYMENT_TYPE:
   'Salaried'    → 0
@@ -186,12 +202,14 @@ EMPLOYMENT_TYPE:
 ---
 
 #### **STEP 5: Handle Missing Values** 🔧
+
 ```python
 df = preprocessor.handle_missing_values(df, fit=True)
 # Result: All NaN filled
 ```
 
 **Imputation Strategy:**
+
 - **Numerical:** Median (robust to outliers)
 - **Categorical:** Mode or 'UNKNOWN'
 - **Strategic:** Income missing → median by occupation
@@ -199,17 +217,20 @@ df = preprocessor.handle_missing_values(df, fit=True)
 ---
 
 #### **STEP 6: Scale Features** ⚖️
+
 ```python
 X_scaled = preprocessor.scale_features(df, fit=True)
 # Result: All features scaled to similar ranges
 ```
 
 **Why RobustScaler?**
+
 - Uses **median + IQR** instead of mean + std
 - **Robust to outliers** (common in financial data)
 - **Preserves distribution shape**
 
 **Before Scaling:**
+
 ```
 INCOME:      [$20,000 - $250,000]
 LOAN_AMOUNT: [$5,000 - $500,000]
@@ -217,6 +238,7 @@ AGE:         [21 - 75]
 ```
 
 **After Scaling:**
+
 ```
 INCOME:      [-2.5 - 3.8]
 LOAN_AMOUNT: [-1.8 - 4.2]
@@ -226,6 +248,7 @@ AGE:         [-2.1 - 2.9]
 ---
 
 #### **STEP 7: Balance Classes** ⚖️
+
 ```python
 X_balanced, y_balanced = preprocessor.balance_data(X_train, y_train)
 # Result: 99:1 → 50:50 (for training only!)
@@ -234,6 +257,7 @@ X_balanced, y_balanced = preprocessor.balance_data(X_train, y_train)
 **⚠️ CRITICAL: Only balance training data**
 
 **Balancing Strategy: SMOTETomek**
+
 ```
 Original Training Set:
 ├── Normal (NO):  68,827 samples (99%)
@@ -247,7 +271,9 @@ Total: 137,654 samples
 ```
 
 **Why SMOTETomek?**
+
 1. **SMOTE:** Synthetic Minority Over-sampling
+
    - Creates synthetic default cases
    - Interpolates between existing defaults
    - Increases minority class
@@ -262,12 +288,14 @@ Total: 137,654 samples
 ---
 
 #### **STEP 8: Train-Val-Test Split** 📊
+
 ```python
 splits = preprocessor.split_data(X, y, test_size=0.2, val_size=0.1)
 # Result: 70% train / 10% val / 20% test
 ```
 
 **Final Data Distribution:**
+
 ```
 ┌─────────────────────────────────────────────────────────┐
 │                    DATA SPLITS                          │
@@ -289,12 +317,14 @@ splits = preprocessor.split_data(X, y, test_size=0.2, val_size=0.1)
 ```
 
 **Why this split strategy?**
+
 - **Training:** Balanced to learn both classes equally
 - **Val/Test:** Original distribution to evaluate real-world performance
 
 ---
 
 #### **STEP 9: Save Artifacts** 💾
+
 ```python
 preprocessor.save('models/preprocessor/preprocessor.pkl')
 np.save('data/processed/X_train.npy', X_train)
@@ -303,6 +333,7 @@ np.save('data/processed/y_train.npy', y_train)
 ```
 
 **Saved Files:**
+
 ```
 models/preprocessor/
   └── preprocessor.pkl         (fitted transformers)
@@ -335,6 +366,7 @@ scaler.fit(np.concatenate([X_train, X_val, X_test]))  # LEAKAGE!
 ```
 
 **Why this matters:**
+
 - Scaler learns mean/std from training
 - Test data never influences preprocessing
 - Simulates real deployment (no future knowledge)
@@ -343,16 +375,16 @@ scaler.fit(np.concatenate([X_train, X_val, X_test]))  # LEAKAGE!
 
 ### 📊 **Preprocessing Metrics**
 
-| Metric | Value |
-|--------|-------|
-| Input samples | 100,000 |
-| After cleaning | 99,326 (0.7% removed) |
-| Features (raw) | 32 |
-| Features (processed) | 30 |
-| Training samples | 137,654 (balanced) |
-| Validation samples | 9,932 (imbalanced) |
-| Test samples | 19,866 (imbalanced) |
-| Processing time | ~2 minutes |
+| Metric               | Value                 |
+| -------------------- | --------------------- |
+| Input samples        | 100,000               |
+| After cleaning       | 99,326 (0.7% removed) |
+| Features (raw)       | 32                    |
+| Features (processed) | 30                    |
+| Training samples     | 137,654 (balanced)    |
+| Validation samples   | 9,932 (imbalanced)    |
+| Test samples         | 19,866 (imbalanced)   |
+| Processing time      | ~2 minutes            |
 
 ---
 
@@ -361,6 +393,7 @@ scaler.fit(np.concatenate([X_train, X_val, X_test]))  # LEAKAGE!
 ### 🧠 **What is an Autoencoder?**
 
 **Concept:**
+
 ```
 An autoencoder learns to compress and reconstruct "normal" data.
 When it sees "unusual" data (defaults), it can't reconstruct well.
@@ -368,6 +401,7 @@ High reconstruction error = Anomaly = Default risk!
 ```
 
 **Architecture:**
+
 ```
 INPUT (30 features)
       ↓
@@ -397,37 +431,37 @@ class CreditRiskAutoencoder(nn.Module):
             nn.BatchNorm1d(64),       # Normalize
             nn.ReLU(),                # Activation
             nn.Dropout(0.2),          # Regularization
-            
+
             nn.Linear(64, 32),        # Layer 2: compress
             nn.BatchNorm1d(32),
             nn.ReLU(),
             nn.Dropout(0.2),
-            
+
             nn.Linear(32, 16),        # Layer 3: compress
             nn.BatchNorm1d(16),
             nn.ReLU(),
             nn.Dropout(0.2),
-            
+
             nn.Linear(16, 8)          # Layer 4: bottleneck
         )
-        
+
         # DECODER (mirror of encoder)
         self.decoder = nn.Sequential(
             nn.Linear(8, 16),         # Expand back
             nn.BatchNorm1d(16),
             nn.ReLU(),
             nn.Dropout(0.2),
-            
+
             nn.Linear(16, 32),
             nn.BatchNorm1d(32),
             nn.ReLU(),
             nn.Dropout(0.2),
-            
+
             nn.Linear(32, 64),
             nn.BatchNorm1d(64),
             nn.ReLU(),
             nn.Dropout(0.2),
-            
+
             nn.Linear(64, 30)         # Back to original
         )
 ```
@@ -435,19 +469,20 @@ class CreditRiskAutoencoder(nn.Module):
 ### 📐 **Architecture Details**
 
 **Parameter Count:** 9,942 trainable parameters
+
 ```
 Encoder:
   30 → 64:   1,984 params
   64 → 32:   2,080 params
   32 → 16:     528 params
   16 → 8:      136 params
-  
+
 Decoder:
   8 → 16:      144 params
   16 → 32:     544 params
   32 → 64:   2,112 params
   64 → 30:   1,950 params
-  
+
 BatchNorm: ~464 params
 Total:      9,942 params
 ```
@@ -455,16 +490,19 @@ Total:      9,942 params
 **Why This Architecture?**
 
 1. **Gradual Compression (30→64→32→16→8)**
+
    - First expand (30→64) to learn feature interactions
    - Then compress to capture essence
    - Bottleneck (8 dims) forces efficient representation
 
 2. **BatchNorm**
+
    - Stabilizes training
    - Prevents internal covariate shift
    - Faster convergence
 
 3. **ReLU Activation**
+
    - Non-linearity
    - Prevents vanishing gradients
    - Fast computation
@@ -479,6 +517,7 @@ Total:      9,942 params
 ### 🎯 **Training Strategy**
 
 #### **Phase 1: Train on Normal Cases Only** ⚠️
+
 ```python
 # CRITICAL: Only use non-default cases for training!
 normal_mask = (y_train == 0)  # NO default
@@ -488,6 +527,7 @@ X_train_normal = X_train[normal_mask]
 ```
 
 **Why train on normal only?**
+
 - Autoencoder learns "what normal looks like"
 - Defaults are rare (1%) - not enough to learn from
 - When it sees defaults later, reconstruction error is HIGH
@@ -495,13 +535,14 @@ X_train_normal = X_train[normal_mask]
 ---
 
 #### **Phase 2: Training Loop**
+
 ```python
 for epoch in range(50):
     for batch in train_loader:
         # Forward pass
         reconstructed = model(batch)
         loss = MSE(reconstructed, batch)
-        
+
         # Backward pass
         optimizer.zero_grad()
         loss.backward()
@@ -509,6 +550,7 @@ for epoch in range(50):
 ```
 
 **Loss Function:** Mean Squared Error (MSE)
+
 ```
 MSE = (1/n) Σ (original - reconstructed)²
 
@@ -517,6 +559,7 @@ Higher MSE = Poor reconstruction = Anomaly!
 ```
 
 **Optimizer:** Adam
+
 - Learning rate: 0.001
 - Adaptive learning rates per parameter
 - Momentum + RMSprop
@@ -524,6 +567,7 @@ Higher MSE = Poor reconstruction = Anomaly!
 ---
 
 #### **Phase 3: Early Stopping**
+
 ```python
 if val_loss < best_val_loss:
     best_val_loss = val_loss
@@ -537,6 +581,7 @@ else:
 ```
 
 **Training Results:**
+
 ```
 Epoch 1:  Train Loss: 145.23 | Val Loss: 152.34
 Epoch 5:  Train Loss: 98.45  | Val Loss: 105.67
@@ -562,7 +607,7 @@ errors_default = []
 for sample in val_set:
     reconstructed = model(sample)
     error = MSE(reconstructed, sample)
-    
+
     if is_normal:
         errors_normal.append(error)
     else:
@@ -570,6 +615,7 @@ for sample in val_set:
 ```
 
 **Statistical Approach:**
+
 ```
 Normal errors:   [10.2, 15.3, 18.7, ..., 450.2]
 Default errors:  [789.4, 1234.5, 1678.9, ..., 3456.7]
@@ -584,6 +630,7 @@ Interpretation:
 ```
 
 **Why 95th percentile?**
+
 - Conservative: allows some variation in normal cases
 - Business trade-off: 5% false positive rate acceptable
 - Adjustable: can use 90th or 99th percentile
@@ -593,6 +640,7 @@ Interpretation:
 ### 📊 **Model Performance**
 
 **Test Set Results:**
+
 ```
 ┌──────────────────────────────────────────────────────┐
 │            AUTOENCODER PERFORMANCE                   │
@@ -614,12 +662,14 @@ Interpretation:
 ```
 
 **Interpretation:**
+
 - **High Accuracy (94%):** Due to class imbalance (99% normal)
 - **Low Precision (12.5%):** Many false alarms (conservative)
 - **Moderate Recall (49%):** Catches about half of defaults
 - **ROC-AUC (0.67):** Better than random (0.5), room for improvement
 
 **Why conservative behavior?**
+
 - Trained only on normal cases
 - Better to reject good loans (safe) than approve bad loans (risky)
 - Business can adjust threshold based on risk appetite
@@ -629,6 +679,7 @@ Interpretation:
 ### 💾 **Model Artifacts**
 
 **Saved Files:**
+
 ```
 models/autoencoder/
   └── default_autoencoder.pth     (40 KB)
@@ -649,6 +700,7 @@ results/
 ## 4. RISK SCORING ENGINE
 
 ### 🎯 **Purpose**
+
 Convert autoencoder reconstruction errors into business decisions.
 
 ### 🔄 **Scoring Pipeline**
@@ -664,12 +716,14 @@ class CreditRiskScorer:
 ### 📐 **Score Calculation**
 
 #### **Step 1: Preprocess New Customer**
+
 ```python
 # Same transformations as training
 customer_scaled = preprocessor.transform(customer_raw)
 ```
 
 #### **Step 2: Get Reconstruction Error**
+
 ```python
 # Forward pass through autoencoder
 reconstructed = model(customer_scaled)
@@ -679,6 +733,7 @@ error = MSE(reconstructed, customer_scaled)
 ```
 
 #### **Step 3: Map to 0-100 Scale**
+
 ```python
 # Calibrate using validation errors
 error_min = np.percentile(val_errors, 1)    # 8.45
@@ -694,6 +749,7 @@ risk_score = np.clip(risk_score, 0, 100)
 ```
 
 #### **Step 4: Categorize Risk**
+
 ```python
 if risk_score < 30:
     category = 'LOW'
@@ -711,6 +767,7 @@ else:
 ### 📊 **Example Predictions**
 
 **Customer 1: Low Risk** ✅
+
 ```python
 Input:
   INCOME: $75,000
@@ -724,13 +781,14 @@ Model Output:
   Risk Score: 5.8 / 100
   Category: LOW
   Action: APPROVE
-  
+
 Explanation:
   "Profile closely matches normal loan patterns.
    Strong credit history, stable income."
 ```
 
 **Customer 2: Medium Risk** ⚠️
+
 ```python
 Input:
   INCOME: $45,000
@@ -744,7 +802,7 @@ Model Output:
   Risk Score: 36.3 / 100
   Category: MEDIUM
   Action: APPROVE_WITH_CONDITIONS
-  
+
 Explanation:
   "Higher loan-to-income ratio than typical.
    Recent employment change. Consider:
@@ -754,6 +812,7 @@ Explanation:
 ```
 
 **Customer 3: High Risk** ❌
+
 ```python
 Input:
   INCOME: $32,000
@@ -767,7 +826,7 @@ Model Output:
   Risk Score: 91.2 / 100
   Category: HIGH
   Action: REJECT
-  
+
 Explanation:
   "Profile significantly deviates from normal patterns.
    High default risk indicators:
@@ -782,6 +841,7 @@ Explanation:
 ### 🎚️ **Threshold Tuning**
 
 **Business Trade-offs:**
+
 ```python
 # Conservative (low risk tolerance)
 THRESHOLDS = {
@@ -813,6 +873,7 @@ THRESHOLDS = {
 ## 5. LLM AGENT INTEGRATION (PLANNED)
 
 ### 🎯 **Goal**
+
 Add natural language interface and explainable AI on top of autoencoder.
 
 ### 🏗️ **Proposed Architecture**
@@ -875,6 +936,7 @@ Add natural language interface and explainable AI on top of autoencoder.
 ### 🛠️ **Implementation Components**
 
 #### **1. RAG System** 📚
+
 ```python
 from langchain_chroma import Chroma
 from sentence_transformers import SentenceTransformer
@@ -902,6 +964,7 @@ relevant_docs = vectorstore.similarity_search(
 ```
 
 #### **2. LLM Interface** 🤖
+
 ```python
 from langchain.llms import HuggingFacePipeline
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -920,6 +983,7 @@ llm = HuggingFacePipeline(
 ```
 
 #### **3. Agent Orchestration** 🎭
+
 ```python
 from langchain.agents import AgentExecutor, create_react_agent
 from langchain.tools import Tool
@@ -954,6 +1018,7 @@ response = executor.invoke({
 ```
 
 #### **4. Prompt Template** 📝
+
 ```python
 SYSTEM_PROMPT = """
 You are an AI credit risk analyst assistant. Your role is to:
@@ -1082,21 +1147,25 @@ knowledge_base/
 ### ✅ **What Works Well**
 
 1. **Anomaly Detection Approach**
+
    - ✅ Train only on normal cases
    - ✅ Defaults detected as high reconstruction error
    - ✅ No need for large default dataset
 
 2. **Leakage Prevention**
+
    - ✅ Fit transformers only on training data
    - ✅ Validation/test use learned parameters
    - ✅ Simulates real deployment
 
 3. **Class Imbalance Handling**
+
    - ✅ SMOTE-Tomek for training (50/50)
    - ✅ Original distribution for val/test (99/1)
    - ✅ Realistic performance evaluation
 
 4. **Conservative Scoring**
+
    - ✅ 95th percentile threshold
    - ✅ Better to reject good loans than approve bad ones
    - ✅ Adjustable for business needs
@@ -1111,11 +1180,13 @@ knowledge_base/
 ### 🎯 **Design Patterns Applied**
 
 1. **Pipeline Pattern**
+
    ```python
    raw_data → clean → engineer → encode → impute → scale → balance → split
    ```
 
 2. **Factory Pattern**
+
    ```python
    preprocessor = CreditRiskPreprocessor(config)
    model = CreditRiskAutoencoder(input_dim, encoding_dims)
@@ -1123,6 +1194,7 @@ knowledge_base/
    ```
 
 3. **Strategy Pattern**
+
    ```python
    # Different balancing strategies
    SMOTE()
@@ -1143,31 +1215,34 @@ knowledge_base/
 
 ### 📊 **Performance Benchmarks**
 
-| Operation | Time | Hardware |
-|-----------|------|----------|
-| Data preprocessing | 2 min | CPU |
-| Model training (28 epochs) | 5 min | CPU |
-| Single prediction | <1 sec | CPU |
-| Batch prediction (1000) | 1 sec | CPU |
-| Full pipeline (100K) | 7 min | CPU |
+| Operation                  | Time   | Hardware |
+| -------------------------- | ------ | -------- |
+| Data preprocessing         | 2 min  | CPU      |
+| Model training (28 epochs) | 5 min  | CPU      |
+| Single prediction          | <1 sec | CPU      |
+| Batch prediction (1000)    | 1 sec  | CPU      |
+| Full pipeline (100K)       | 7 min  | CPU      |
 
 ---
 
 ### 🔮 **Future Enhancements**
 
 1. **Model Improvements**
+
    - [ ] Try Variational Autoencoder (VAE)
    - [ ] Ensemble with XGBoost/LightGBM
    - [ ] Feature importance via SHAP
    - [ ] Attention mechanisms
 
 2. **LLM Integration**
+
    - [ ] Implement RAG with ChromaDB
    - [ ] Deploy Llama 3.2 3B locally
    - [ ] Create agent tools (LangChain)
    - [ ] Build FastAPI endpoints
 
 3. **Production Features**
+
    - [ ] Real-time monitoring
    - [ ] A/B testing framework
    - [ ] Model versioning (MLflow)
@@ -1186,16 +1261,19 @@ knowledge_base/
 ### For LLM Engineer Perspective:
 
 1. **Autoencoder = Anomaly Detector**
+
    - Learns "normal" patterns from majority class
    - High reconstruction error = anomaly = risk
    - No need for balanced training data
 
 2. **Preprocessing is Critical**
+
    - 50% of work is data cleaning/engineering
    - Leakage prevention is paramount
    - RobustScaler better for financial data
 
 3. **LLM Integration Strategy**
+
    - Autoencoder provides numerical risk score
    - RAG adds contextual policy knowledge
    - LLM translates to natural language
@@ -1216,6 +1294,7 @@ knowledge_base/
 ---
 
 **Next Steps for LLM Agent:**
+
 1. ✅ Install LangChain dependencies (DONE)
 2. 🔨 Implement RAG system with ChromaDB
 3. 🔨 Create agent tools and prompts
