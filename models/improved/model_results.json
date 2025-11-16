@@ -1,0 +1,90 @@
+{
+  "XGBoost": {
+    "accuracy": 0.9885734420618142,
+    "precision": 0.45741324921135645,
+    "recall": 0.725,
+    "f1_score": 0.5609284332688588,
+    "roc_auc": 0.96539357266348,
+    "pr_auc": 0.7219711346264804,
+    "true_positives": 145,
+    "false_positives": 172,
+    "false_negatives": 55,
+    "true_negatives": 19494,
+    "confusion_matrix": [
+      [
+        19494,
+        172
+      ],
+      [
+        55,
+        145
+      ]
+    ]
+  },
+  "Random Forest": {
+    "accuracy": 0.9697473069566093,
+    "precision": 0.2098408104196816,
+    "recall": 0.725,
+    "f1_score": 0.3254769921436588,
+    "roc_auc": 0.9447221092240414,
+    "pr_auc": 0.5582688744198664,
+    "true_positives": 145,
+    "false_positives": 546,
+    "false_negatives": 55,
+    "true_negatives": 19120,
+    "confusion_matrix": [
+      [
+        19120,
+        546
+      ],
+      [
+        55,
+        145
+      ]
+    ]
+  },
+  "Gradient Boosting": {
+    "accuracy": 0.9662740360414779,
+    "precision": 0.18666666666666668,
+    "recall": 0.7,
+    "f1_score": 0.29473684210526313,
+    "roc_auc": 0.9487897894843893,
+    "pr_auc": 0.5687412064120827,
+    "true_positives": 140,
+    "false_positives": 610,
+    "false_negatives": 60,
+    "true_negatives": 19056,
+    "confusion_matrix": [
+      [
+        19056,
+        610
+      ],
+      [
+        60,
+        140
+      ]
+    ]
+  },
+  "Logistic Regression": {
+    "accuracy": 0.8382663847780126,
+    "precision": 0.04223640230932847,
+    "recall": 0.695,
+    "f1_score": 0.0796333428816958,
+    "roc_auc": 0.8634419810841045,
+    "pr_auc": 0.20901191372119096,
+    "true_positives": 139,
+    "false_positives": 3152,
+    "false_negatives": 61,
+    "true_negatives": 16514,
+    "confusion_matrix": [
+      [
+        16514,
+        3152
+      ],
+      [
+        61,
+        139
+      ]
+    ]
+  }
+}

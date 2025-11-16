@@ -19,18 +19,9 @@ warnings.filterwarnings('ignore')
 
 
 class CreditRiskPreprocessor:
-    """
-    Complete preprocessing pipeline for credit risk/loan default prediction
-    Handles imbalanced datasets with multiple balancing strategies
-    """
     
     def __init__(self, config: Dict = None):
-        """
-        Initialize preprocessor with configuration
         
-        Args:
-            config: Dictionary with preprocessing settings
-        """
         self.config = config or {}
         self.scaler = RobustScaler()  # Better for financial data with outliers
         self.label_encoders = {}
@@ -40,23 +31,14 @@ class CreditRiskPreprocessor:
         self.target_column = None
         self.imputers = {}
         
-        # Statistics for later use
+        
         self.original_distribution = None
         self.balanced_distribution = None
         
         print("✅ CreditRiskPreprocessor initialized")
     
     def load_data(self, filepath: str, target_column: str = None) -> pd.DataFrame:
-        """
-        Load data from CSV file with automatic target detection
         
-        Args:
-            filepath: Path to CSV file
-            target_column: Name of target column (optional, will auto-detect)
-            
-        Returns:
-            Loaded DataFrame
-        """
         print(f"\n{'='*70}")
         print(f"LOADING DATA: {filepath}")
         print(f"{'='*70}")
@@ -114,15 +96,7 @@ class CreditRiskPreprocessor:
         raise ValueError("Cannot auto-detect target column. Please specify manually.")
     
     def analyze_imbalance(self, y: np.ndarray) -> Dict:
-        """
-        Analyze class imbalance in target variable
-        
-        Args:
-            y: Target array
-            
-        Returns:
-            Dictionary with imbalance statistics
-        """
+
         print(f"\n{'='*70}")
         print("CLASS IMBALANCE ANALYSIS")
         print(f"{'='*70}")
@@ -172,15 +146,7 @@ class CreditRiskPreprocessor:
         return stats
     
     def clean_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Clean data: remove duplicates, handle missing values, remove invalid entries
-        
-        Args:
-            df: Input DataFrame
-            
-        Returns:
-            Cleaned DataFrame
-        """
+
         print(f"\n{'='*70}")
         print("DATA CLEANING")
         print(f"{'='*70}")
@@ -220,15 +186,7 @@ class CreditRiskPreprocessor:
         return df
     
     def engineer_features(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Feature engineering for credit risk data
-        
-        Args:
-            df: Input DataFrame
-            
-        Returns:
-            DataFrame with engineered features
-        """
+ 
         print(f"\n{'='*70}")
         print("FEATURE ENGINEERING")
         print(f"{'='*70}")
@@ -295,16 +253,7 @@ class CreditRiskPreprocessor:
         return df
     
     def encode_categorical(self, df: pd.DataFrame, fit: bool = True) -> pd.DataFrame:
-        """
-        Encode categorical variables
         
-        Args:
-            df: Input DataFrame
-            fit: Whether to fit encoders (True for train, False for test)
-            
-        Returns:
-            DataFrame with encoded features
-        """
         print(f"\n{'='*70}")
         print("ENCODING CATEGORICAL FEATURES")
         print(f"{'='*70}")
@@ -343,16 +292,7 @@ class CreditRiskPreprocessor:
         return df
     
     def handle_missing_values(self, df: pd.DataFrame, fit: bool = True) -> pd.DataFrame:
-        """
-        Impute missing values
         
-        Args:
-            df: Input DataFrame
-            fit: Whether to fit imputers (True for train, False for test)
-            
-        Returns:
-            DataFrame with imputed values
-        """
         print(f"\n{'='*70}")
         print("HANDLING MISSING VALUES")
         print(f"{'='*70}")
@@ -375,16 +315,7 @@ class CreditRiskPreprocessor:
         return df
     
     def scale_features(self, df: pd.DataFrame, fit: bool = True) -> np.ndarray:
-        """
-        Scale numerical features
         
-        Args:
-            df: Input DataFrame
-            fit: Whether to fit scaler (True for train, False for test)
-            
-        Returns:
-            Scaled feature array
-        """
         print(f"\n{'='*70}")
         print("SCALING FEATURES")
         print(f"{'='*70}")
@@ -408,23 +339,7 @@ class CreditRiskPreprocessor:
         y: np.ndarray, 
         strategy: str = 'smote_tomek'
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Balance imbalanced dataset using various strategies
         
-        Args:
-            X: Feature array
-            y: Target array
-            strategy: Balancing strategy
-                - 'none': No balancing
-                - 'random_over': Random oversampling
-                - 'smote': SMOTE (Synthetic Minority Over-sampling)
-                - 'adasyn': ADASYN (Adaptive Synthetic Sampling)
-                - 'smote_tomek': SMOTE + Tomek Links (recommended)
-                - 'smote_enn': SMOTE + Edited Nearest Neighbors
-                
-        Returns:
-            Balanced X and y arrays
-        """
         print(f"\n{'='*70}")
         print(f"BALANCING DATA (Strategy: {strategy.upper()})")
         print(f"{'='*70}")
@@ -476,19 +391,7 @@ class CreditRiskPreprocessor:
         val_size: float = 0.1,
         random_state: int = 42
     ) -> Dict[str, np.ndarray]:
-        """
-        Split data into train, validation, and test sets
-        
-        Args:
-            X: Feature array
-            y: Target array
-            test_size: Test set proportion
-            val_size: Validation set proportion
-            random_state: Random seed
-            
-        Returns:
-            Dictionary with splits
-        """
+       
         print(f"\n{'='*70}")
         print("SPLITTING DATA")
         print(f"{'='*70}")

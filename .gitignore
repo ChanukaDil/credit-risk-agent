@@ -1,9 +1,4 @@
 
-
-# ═══════════════════════════════════════════════════════════
-# .gitignore for Credit Risk Agent
-# ═══════════════════════════════════════════════════════════
-
 # ──────────────────────────────────────────────────────────
 # Python
 # ──────────────────────────────────────────────────────────
@@ -34,6 +29,7 @@ MANIFEST
 # ──────────────────────────────────────────────────────────
 venv/
 venv_agent/
+agent/
 ENV/
 env/
 .venv
@@ -45,9 +41,12 @@ env/
 # Trained models
 models/autoencoder/*.pth
 models/autoencoder/*.pt
+models/improved/*.pkl
+models/improved/*.joblib
 models/llm/
 models/vector_db/
 models/checkpoints/
+models/embeddings/
 
 # Preprocessor (can be large)
 models/preprocessor/*.pkl
@@ -87,7 +86,32 @@ results/figures/
 results/logs/*.log
 results/metrics/
 results/reports/
+results/visualizations/
 *.log
+
+# ──────────────────────────────────────────────────────────
+# Backup Files
+# ──────────────────────────────────────────────────────────
+backup_*/
+*.backup
+*_backup/
+
+# ──────────────────────────────────────────────────────────
+# Documentation Files (Project-Specific)
+# ──────────────────────────────────────────────────────────
+DOCUMENTATION_INDEX.md
+EXECUTION_FLOWCHART.md
+EXECUTIVE_SUMMARY.md
+KUBEFLOW_INTEGRATION_PLAN.md
+MODEL_IMPROVEMENT_SUMMARY.md
+PRODUCTION_DEPLOYMENT_GUIDE.md
+QUICK_START_GUIDE.md
+
+# ──────────────────────────────────────────────────────────
+# Cleanup Scripts
+# ──────────────────────────────────────────────────────────
+cleanup_deprecated_files.bat
+cleanup_deprecated_files.sh
 
 # ──────────────────────────────────────────────────────────
 # Jupyter Notebooks
@@ -147,6 +171,15 @@ docker-compose.override.yml
 *~
 .cache/
 
+# ──────────────────────────────────────────────────────────
+# Exception: Keep Important Metadata Files
+# ──────────────────────────────────────────────────────────
+!models/improved/model_results.json
+!models/improved/model_comparison.png
+!data/processed/metadata.json
+!results/model_test_results.csv
+!results/test_batch_results.csv
+
 # ═══════════════════════════════════════════════════════════
 # WHAT TO INCLUDE (These are safe to upload):
 # - Source code (.py files)
@@ -155,4 +188,5 @@ docker-compose.override.yml
 # - Requirements files
 # - Dockerfiles
 # - Scripts
+# - Small metadata/config files (model_results.json, etc.)
 # ═══════════════════════════════════════════════════════════
